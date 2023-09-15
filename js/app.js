@@ -7,10 +7,11 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
 
 // refs
   const btnSpin = document.getElementById("btn-spin");
-  const txtBacklog = document.getElementById("txt-backlog");
+  const btnClearProject = document.getElementById("btn-clear-project");
   const lblCurrentProject = document.getElementById("lbl-current-project");
   const lblNoProject = document.getElementById("lbl-no-project");
-
+  const txtBacklog = document.getElementById("txt-backlog");
+  
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
 //
@@ -42,8 +43,8 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
     let segOffsetAngle = segAngle / 2;
 
     for (var i = 0; i < backlogItems.length; i++) {
-      drawSegment(ctx, c, r, backlogItems.length, segOffsetAngle + spinAngle, segAngle, shuffledColors[i]);
-      drawSegmentText(ctx, c, r, backlogItems.length, (segAngle / 2) + segOffsetAngle + spinAngle, backlogItems[i]);
+      drawSegment(ctx, c, r, backlogItems.length, segOffsetAngle + spinAngle, segAngle, shuffledColors[i].segment);
+      drawSegmentText(ctx, c, r, backlogItems.length, (segAngle / 2) + segOffsetAngle + spinAngle, backlogItems[i], shuffledColors[i].text);
       drawArrow(ctx,c,r)
 
       segOffsetAngle += segAngle;
@@ -127,6 +128,12 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
     
     alert.onclick = () => onAlertClose(pickIndex, backlogItems)
     alertMsg.onclick = () => onAlertClose(pickIndex, backlogItems)
+  }
+
+  btnClearProject.onclick = () => {
+    localStorage.removeItem("current_project");
+    lblNoProject.classList.add('visible');
+    lblCurrentProject.innerHTML = null
   }
 
   txtBacklog.onchange = (e) => {

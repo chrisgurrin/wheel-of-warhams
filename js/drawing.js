@@ -17,13 +17,13 @@ export const drawSegment = (ctx, c, r, numSegments, startAngle, segAngle, color)
     ctx.restore();
   };
 
-  export const drawSegmentText = (ctx, c, r, numSegments, angle, text) => {
+  export const drawSegmentText = (ctx, c, r, numSegments, angle, text, color) => {
     ctx.save();
     ctx.translate(c, c);
     ctx.rotate(angle - deg2rad(360/numSegments)); 
  
     ctx.textAlign = "center";
-    ctx.fillStyle = "black";
+    ctx.fillStyle = color;
     ctx.font = "12px sans-serif";
     ctx.fillText(text, r / 1.75, 0);
 

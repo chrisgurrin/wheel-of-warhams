@@ -1,24 +1,53 @@
+
+
 const colors = [
-    '#FF0000', /*Red*/ 	 	
-    '#FFFFFF', /*White*/
-    '#00FFFF', /*Cyan*/ 	 	
-    '#C0C0C0', /*Silver*/
-    '#0000FF', /*Blue*/ 	 
-    '#808080', /*Gray*/
-    '#00008B', /*DarkBlue*/ 	 	
-    '#ADD8E6', /*LightBlue*/ 	 	
-    '#FFA500', /*Orange*/
-    '#800080', /*Purple*/ 	 	
-    '#A52A2A', /*Brown*/
-    '#FFFF00', /*Yellow*/ 	 	
-    '#800000', /*Maroon*/
-    '#00FF00', /*Lime*/ 	 	
-    '#008000', /*Green*/
-    '#FF00FF', /*Magenta*/ 	 	
-    '#808000', /*Olive*/
-    '#FFC0CB', /*Pink*/ 	 	
-    '#7FFFD4' /*Aquamarine*/
-    ];
+  // Red
+  {segment: "#FF0000", text: 'black'},
+  // Green
+  {segment: "#008000", text: 'black'},
+  // Blue
+  {segment: "#0000FF", text: 'white'},
+  // White
+  {segment: "#FFFFFF", text: 'black'},
+  // Yellow
+  {segment: "#FFFF00", text: 'black'},
+  // Purple
+  {segment: "#800080", text: 'white'},
+  // Cyan
+  {segment: "#00FFFF", text: 'black'},
+  // Magenta
+  {segment: "#FF00FF", text: 'black'},
+  // Gray
+  {segment: "#808080", text: 'black'},
+  // Dark Red
+  {segment: "#8B0000", text: 'white'},
+  // Dark Green
+  {segment: "#006400", text: 'white'},
+  // Dark Blue
+  {segment: "#00008B", text: 'white'},
+  // Dark Gray
+  {segment: "#A9A9A9", text: 'black'},
+  // Light Gray
+  {segment: "#D3D3D3", text: 'black'},
+  // Brown
+  {segment: "#A52A2A", text: 'white'},
+  // Orange
+  {segment: "#FFA500", text: 'black'},
+  // Pink
+  {segment: "#FFC0CB", text: 'black'},
+  // Gold
+  {segment: "#FFD700", text: 'black'},
+  // Silver
+  {segment: "#C0C0C0", text: 'black'},
+  // Lavender
+  {segment: "#E6E6FA", text: 'black'},
+  // Teal
+  {segment: "#008080", text: 'black'},
+  // Olive
+  {segment: "#808000", text: 'white'},
+  // Maroon
+  {segment: "#800000", text: 'white'},
+]
     
     export const getShuffledColors = (numSegments) => {
     let shuffledColors = [];
