@@ -1,0 +1,158 @@
+html, body{
+  background: #060606;
+  background-image: url('./stars-bb2.gif');
+  display:flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position:relative;
+}
+
+main{
+  display:flex;
+  min-height:0;
+  min-width: 0;
+  width:100%;
+  justify-content: center;
+
+  gap: 1rem;
+}
+
+section{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  z-index:20;
+  background-color: black;
+  height: 100%;
+  padding-inline: 2rem;
+}
+
+img.skull1{
+  position: absolute;
+  left: 40px;
+  top: 230px;
+  width:auto;
+  height:450px;
+}
+
+img.skull2{
+  position: absolute;
+  left: 40px;
+  bottom: 30px;
+  width:auto;
+  height:250px;
+}
+img.skull3{
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  width:auto;
+  height:150px;
+}
+
+section > div{
+  display:flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+canvas{
+  width: max-content;
+  position: relative;
+  z-index:  90;
+}
+
+button{
+  display: flex;
+  padding: 1rem;
+  font-family: serif;
+  font-weight: bold;
+  color: #00ff00;
+  border: 4px solid #ff0000;
+  background: blue;
+  text-transform: uppercase;
+  width: fit-content;
+  align-self: center;
+}
+
+#btn-spin{
+  padding-inline: 2rem;
+  font-size: 1.25rem;
+  position: relative;
+  z-index: 20;
+}
+
+#backlog{
+  color: red;
+  font-size: 2.75rem;
+  text-transform: uppercase;
+  text-decoration: underline;
+  width: 100%;
+  display:flex;
+  flex-direction: column;
+  flex-shrink: 1;
+  height: 100%;
+}
+
+textarea{
+  width: 100%;
+  height: 14rem;
+  min-width: 0;
+  max-height: 100%;
+  height:100%;
+}
+
+#title{
+  position:absolute;
+  z-index:10;
+  top:0;
+  left: 0;
+  width:10px;
+  font-size: 6rem;
+  color: yellow;
+  display:flex;
+  flex-direction: column;
+}
+
+#alert-background{
+  width:100%;
+  height: 100%;
+  background: #000000cc;
+  position: absolute;
+  z-index: 100;
+  display: none;
+
+  justify-content: center;
+  align-items:center;
+}
+
+#alert-background.visible{
+  display: flex;
+}
+
+.alert{
+  color: #fff;
+  padding: 3rem;
+  border: 4px solid blue;
+  background: red;
+  display: flex;
+  flex-direction: column;
+  margin-inline: auto;
+  justify-content: center;
+}
+
+h1{
+  font-size: 3.5rem;
+}
+
+h2{
+  font-size:2.5rem;
+  text-align: center;
+  text-decoration: underline;
+}
+p{
+  font-size: 1.25rem;
+}
