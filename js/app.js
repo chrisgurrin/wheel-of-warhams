@@ -137,8 +137,7 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
   }
 
   txtBacklog.onchange = (e) => {
-    backlogItems = e.target.value.split(',').map(x => x.replace('\n', ''))
-    localStorage.setItem("backlog_items", backlogItems);
+    backlogItems = setBacklogItems(e.target.value.split(','))
     redraw()
   }
 

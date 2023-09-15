@@ -3,8 +3,11 @@ export const loadBacklogFromStorage = () => {
      return items ? items.split(',') : []
 }
 
-export const setBacklogItems = (backlogItems) => 
-    localStorage.setItem('backlog_items', backlogItems.map(x => x.replace('\n','')))
+export const setBacklogItems = (backlogItems) => {
+    const newBacklog = backlogItems.map(x => x.replace('\n','')).filter(x => x != '')
+    localStorage.setItem('backlog_items', newBacklog)
+    return newBacklog
+}
 
 export const removeItemFromBacklog = (pickIndex, backlogItems) => {
     backlogItems.splice(pickIndex,1)

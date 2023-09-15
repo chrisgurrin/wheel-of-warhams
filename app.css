@@ -53,6 +53,21 @@ img.skull3{
   width:auto;
   height:150px;
 }
+img.ultra{
+  position: absolute;
+  right: 5.5rem;
+  top: 240px;
+  width:241px;
+  height: 365px;
+}
+
+img.skullspider{
+  position: absolute;
+  right: 25rem;
+  top: 180px;
+  width:151px;
+  height: 115px;
+}
 
 section > div{
   display:flex;
