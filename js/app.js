@@ -1,23 +1,19 @@
-import { setAlertMsg, showAlert } from './alert.js';
+import { alert, alertMsg, hideAlert, setAlertPick , showAlert } from './alert.js';
+import { formatBacklogString, loadBacklogFromStorage, removeItemFromBacklog, setBacklogItems } from './backlog.js'
 import { getShuffledColors } from './colors.js';
 import { clear, drawArrow, drawSegment, drawSegmentText, drawPlaceholderText } from './drawing.js'
 import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
-import { getBacklogItems } from './backlog.js'
 
 
 // refs
   const btnSpin = document.getElementById("btn-spin");
   const txtBacklog = document.getElementById("txt-backlog");
-
+  const lblCurrentProject = document.getElementById("lbl-current-project");
+  const lblNoProject = document.getElementById("lbl-no-project");
 
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
 //
-
-let segments;
-let segAngle, shuffledColors = 0;
-let animAngle = 0
-
 
 // Main
   const r = 275;
@@ -30,8 +26,14 @@ let animAngle = 0
   const duration = 8000
   const rotations = 30
   const fps = 60
+  const frameStep = 1000/fps
 
-  const drawFrame = () => 
+  let backlogItems;
+  let segAngle, shuffledColors = 0;
+  let spinAngle = 0
+
+  //draw the wheel
+  const drawWheel = () => 
   {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -39,9 +41,9 @@ let animAngle = 0
   
     let segOffsetAngle = segAngle / 2;
 
-    for (var i = 0; i < segments.length; i++) {
-      drawSegment(ctx, c, r, segments.length, segOffsetAngle + animAngle, segAngle, shuffledColors[i]);
-      drawSegmentText(ctx, c, r, segments.length, (segAngle / 2) + segOffsetAngle + animAngle, segments[i]);
+    for (var i = 0; i < backlogItems.length; i++) {
+      drawSegment(ctx, c, r, backlogItems.length, segOffsetAngle + spinAngle, segAngle, shuffledColors[i]);
+      drawSegmentText(ctx, c, r, backlogItems.length, (segAngle / 2) + segOffsetAngle + spinAngle, backlogItems[i]);
       drawArrow(ctx,c,r)
 
       segOffsetAngle += segAngle;
@@ -49,73 +51,104 @@ let animAngle = 0
     ctx.restore()
   }
 
-  const update = () => {
-    segments = getBacklogItems(txtBacklog)
-    segAngle = deg2rad(360 / segments.length);
-    shuffledColors = getShuffledColors(segments.length);
+  // update the wheel and redraw
+  const redraw = () => {
+    segAngle = deg2rad(360 / backlogItems.length);
+    shuffledColors = getShuffledColors(backlogItems.length);
 
-    window.requestAnimationFrame(drawFrame)
+    window.requestAnimationFrame(drawWheel)
   }
 
-  let stepCount = 0;
-
+  //  spin the wheel. Returns the index of the picked item.
   const spin = () => {
-    if(!segments.length){
+    if(!backlogItems.length){
       window.requestAnimationFrame(() => {
         clear(ctx)
         drawPlaceholderText(ctx,c,'Fill in your backlog wall of shame first dummy')
       })
       return
     }
-
-    const frameStep = 1000/fps
     
-    const amount = Math.floor(getScaledValue(Math.random(), 0, 1, 0, segments.length))
+    // choose how many segments to offset the final rotation by (anticlockwise)
+    const pickOffset =  Math.floor(getScaledValue(Math.random(), 0, 1, 0, backlogItems.length))
 
-    const totalRotation = (rotations * 360) +  rad2deg(segAngle * amount)
+    // total amount of rotation to spin by in degrees
+    const totalRotation = (rotations * 360) +  rad2deg(segAngle *  pickOffset)
 
-   // console.log('amount',amount)
-    //console.log('totalRotation:', totalRotation,  'numSteps:', duration/frameStep)
+    // get the picked item
+    const pickIndex =  pickOffset === 0 ? 0 : backlogItems.length -  pickOffset
+    const pick = backlogItems[pickIndex]
 
-    const pick = segments[amount === 0 ? 0 : segments.length - amount]
+    console.log('you wil pick: ', pick)
 
-    console.log('you will pick ', pick)
-
-
+    // callback to animate the spin
     const tickSpin = () => {
       const elapsed = Date.now() - start
-      const deg = easeInOutCirc(elapsed, 0, totalRotation, duration)
-      animAngle = deg2rad(deg)
-
-      //console.log('stepCount:', stepCount, 'deg:', deg, 'elapsed:', elapsed)
-      stepCount += 1
-
-      if(elapsed < duration){
-        window.requestAnimationFrame(drawFrame)   
-      }
+      spinAngle = deg2rad(easeInOutCirc(elapsed, 0, totalRotation, duration))
+  
+      window.requestAnimationFrame(drawWheel)         
         
       setTimeout(() => {
         if(elapsed < duration){
-        tickSpin()
-       }else {
-          console.log('Total time:',Date.now() - start)
-          setAlertMsg(pick)
+          tickSpin()
+        }else {
+          setAlertPick(pick)
           setTimeout(() => showAlert(), 1000)
 
-          stepCount = 0
-          animAngle = 0
+          spinAngle = 0
         }
       }, frameStep)
     }
  
     let start = Date.now()
-    tickSpin()        
+    tickSpin()    
+
+    return pickIndex
   }
 
-  btnSpin.onclick = spin
-  txtBacklog.onchange = update
+  const onAlertClose = (pickIndex, backlogItems) => {
+    hideAlert()
 
-  update()
+    // update current project
+    localStorage.setItem('current_project', backlogItems[pickIndex])
+    lblCurrentProject.innerHTML = backlogItems[pickIndex]
+    lblNoProject.classList.remove('visible');
 
+    // remove item from backlog
+    removeItemFromBacklog(pickIndex,backlogItems) 
+    txtBacklog.value = formatBacklogString(backlogItems)
+
+    redraw()
+  }
+
+  // add event handlers
+  btnSpin.onclick = () => {
+    const pickIndex = spin()
+    
+    alert.onclick = () => onAlertClose(pickIndex, backlogItems)
+    alertMsg.onclick = () => onAlertClose(pickIndex, backlogItems)
+  }
+
+  txtBacklog.onchange = (e) => {
+    backlogItems = e.target.value.split(',').map(x => x.replace('\n', ''))
+    localStorage.setItem("backlog_items", backlogItems);
+    redraw()
+  }
+
+  // load backlog
+  backlogItems = loadBacklogFromStorage()
+  txtBacklog.value = formatBacklogString(backlogItems)
+
+  // load current project
+  localStorage.getItem('current_project')
+  const currentProject = localStorage.getItem('current_project')
+  if(currentProject){
+    lblCurrentProject.innerHTML = currentProject
+  }
+  else{
+    lblNoProject.classList.add('visible');
+  }
+
+  redraw()
 
 

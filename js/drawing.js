@@ -24,7 +24,8 @@ export const drawSegment = (ctx, c, r, numSegments, startAngle, segAngle, color)
  
     ctx.textAlign = "center";
     ctx.fillStyle = "black";
-    ctx.fillText(text, r / 2, 0);
+    ctx.font = "12px sans-serif";
+    ctx.fillText(text, r / 1.75, 0);
 
     ctx.restore();
   };

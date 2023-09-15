@@ -105,16 +105,29 @@ textarea{
   height:100%;
 }
 
+#controls{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+input{
+  width:60px;
+  height:40px;
+}
+
 #title{
   position:absolute;
   z-index:10;
   top:0;
   left: 0;
-  width:10px;
-  font-size: 6rem;
+  width:326px;
+  font-size: 6.5rem;
   color: yellow;
   display:flex;
   flex-direction: column;
+  border: 4px solid cyan;
 }
 
 #alert-background{
@@ -156,3 +169,37 @@ h2{
 p{
   font-size: 1.25rem;
 }
+
+#current-project{
+  width: 10px;
+  display:flex;
+  flex-direction: column;
+  justify-content: end;
+  position:absolute;
+  font-size: 3rem;
+  bottom: 15px;
+  right: 65px;
+  color: #fff;
+  text-align: end;
+}
+
+#current-project div{
+  width: 10px;
+  display:flex;
+  justify-content: end;
+  text-align: end;
+}
+
+#lbl-current-project,
+div#lbl-no-project{
+  font-size: 4.75rem;
+  color: red;
+}
+
+div#lbl-no-project{
+  display: none;
+}
+div#lbl-no-project.visible{
+  display: flex;
+}
+
