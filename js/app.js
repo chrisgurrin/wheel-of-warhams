@@ -1,5 +1,5 @@
-import { alert, alertMsg, hideAlert, setAlertPick , showAlert } from './alert.js';
-import { formatBacklogString, loadBacklogFromStorage, removeItemFromBacklog, setBacklogItems } from './backlog.js'
+import { pickAlert, pickAlertMsg, helpAlert, hideAlert, setAlertMsg , showAlert } from './alert.js';
+import { formatBacklogString, loadBacklogFromStorage, setBacklogItems } from './backlog.js'
 import { getShuffledColors } from './colors.js';
 import { clear, drawArrow, drawSegment, drawSegmentText, drawPlaceholderText } from './drawing.js'
 import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
@@ -11,6 +11,7 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
   const lblCurrentProject = document.getElementById("lbl-current-project");
   const lblNoProject = document.getElementById("lbl-no-project");
   const txtBacklog = document.getElementById("txt-backlog");
+  const lnkHelp = document.getElementById("lnk-help");
   
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
@@ -93,8 +94,8 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
         if(elapsed < duration){
           tickSpin()
         }else {
-          setAlertPick(pick)
-          setTimeout(() => showAlert(), 1000)
+          setAlertMsg(pickAlertMsg, pick)
+          setTimeout(() => showAlert(pickAlert), 1000)
 
           spinAngle = 0
         }
@@ -108,7 +109,7 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
   }
 
   const onAlertClose = (pickIndex, backlogItems) => {
-    hideAlert()
+    hideAlert(pickAlert)
 
     // update current project
     localStorage.setItem('current_project', backlogItems[pickIndex])
@@ -116,7 +117,8 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
     lblNoProject.classList.remove('visible');
 
     // remove item from backlog
-    removeItemFromBacklog(pickIndex,backlogItems) 
+    backlogItems.splice(pickIndex,1)
+    setBacklogItems(backlogItems) 
     txtBacklog.value = formatBacklogString(backlogItems)
 
     redraw()
@@ -126,8 +128,8 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
   btnSpin.onclick = () => {
     const pickIndex = spin()
     
-    alert.onclick = () => onAlertClose(pickIndex, backlogItems)
-    alertMsg.onclick = () => onAlertClose(pickIndex, backlogItems)
+    pickAlert.onclick = () => onAlertClose(pickIndex, backlogItems)
+    pickAlertMsg.onclick = () => onAlertClose(pickIndex, backlogItems)
   }
 
   btnClearProject.onclick = () => {
@@ -139,6 +141,12 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
   txtBacklog.onchange = (e) => {
     backlogItems = setBacklogItems(e.target.value.split(','))
     redraw()
+  }
+
+  helpAlert.onclick = () => hideAlert(helpAlert)
+
+  lnkHelp.onclick = () => {
+    showAlert(helpAlert)
   }
 
   // load backlog

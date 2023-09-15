@@ -9,10 +9,5 @@ export const setBacklogItems = (backlogItems) => {
     return newBacklog
 }
 
-export const removeItemFromBacklog = (pickIndex, backlogItems) => {
-    backlogItems.splice(pickIndex,1)
-    setBacklogItems(backlogItems)    
-}
-
 export const formatBacklogString = (backlogItems) => backlogItems.join(',\n')
 
