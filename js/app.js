@@ -1,10 +1,9 @@
 import { setAlertMsg, showAlert } from './alert.js';
 import { getShuffledColors } from './colors.js';
 import { clear, drawArrow, drawSegment, drawSegmentText, drawPlaceholderText } from './drawing.js'
-import { deg2rad, rad2deg } from '/maths.js'
-
+import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
 import { getBacklogItems } from './backlog.js'
-import { easeInOutCirc, getScaledValue } from './maths.js';
+
 
 // refs
   const btnSpin = document.getElementById("btn-spin");

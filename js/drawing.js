@@ -1,4 +1,4 @@
-import { deg2rad, rad2deg } from '/maths.js'
+import { deg2rad, rad2deg } from './maths.js'
 
 export const drawSegment = (ctx, c, r, numSegments, startAngle, segAngle, color) => {
     ctx.save();
