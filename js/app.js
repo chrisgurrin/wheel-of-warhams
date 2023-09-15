@@ -79,7 +79,7 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
     const pickIndex =  pickOffset === 0 ? 0 : backlogItems.length -  pickOffset
     const pick = backlogItems[pickIndex]
 
-    console.log('you wil pick: ', pick)
+    //console.log('you wil pick: ', pick)
 
     // callback to animate the spin
     const tickSpin = () => {
