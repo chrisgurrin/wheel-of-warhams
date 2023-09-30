@@ -1,4 +1,4 @@
-import { pickAlert, pickAlertMsg, helpAlert, hideAlert, setAlertMsg , showAlert } from './alert.js';
+import { pickAlert, pickAlertMsg, hideAlert, setAlertMsg , showAlert } from './alert.js';
 import { formatBacklogString, loadBacklogFromStorage, loadCompletedBacklogFromStorage, setBacklogItems } from './backlog.js'
 import { getShuffledColors } from './colors.js';
 import { clear, drawArrow, drawSegment, drawSegmentText, drawPlaceholderText } from './drawing.js'
@@ -11,8 +11,7 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
   const lblCurrentProject = document.getElementById("lbl-current-project");
   const lblNoProject = document.getElementById("lbl-no-project");
   const txtBacklog = document.getElementById("txt-backlog");
-  const lnkHelp = document.getElementById("lnk-help");
-  
+
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
 //
@@ -81,8 +80,6 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
     const pickIndex =  pickOffset === 0 ? 0 : backlogItems.length -  pickOffset
     const pick = backlogItems[pickIndex]
 
-    //console.log('you wil pick: ', pick)
-
     // callback to animate the spin
     const tickSpin = () => {
       const elapsed = Date.now() - start
@@ -111,10 +108,10 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
   const onAlertClose = (pickIndex, backlogItems) => {
     hideAlert(pickAlert)
 
+    // add curent project to completed backlog
     const completedProj = localStorage.getItem('current_project')
     const completedBacklog = loadCompletedBacklogFromStorage()
     localStorage.setItem('completed_backlog', [...completedBacklog, completedProj])
-
 
     // update current project
     localStorage.setItem('current_project', backlogItems[pickIndex])
@@ -146,12 +143,6 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
   txtBacklog.onchange = (e) => {
     backlogItems = setBacklogItems(e.target.value.split(','))
     redraw()
-  }
-
-  helpAlert.onclick = () => hideAlert(helpAlert)
-
-  lnkHelp.onclick = () => {
-    showAlert(helpAlert)
   }
 
   // load backlog

@@ -209,51 +209,6 @@ font-size: 1.5rem;
   justify-content: center;
 }
 
-#help-alert-background  .alert{
-
-  padding: 3rem;
-
-  display: flex;
-
-
-  color: black;
-  background: rgb(10, 219, 10);
-  border: 6px solid rgb(248, 0, 227);
-
-  font-size: 2.25rem;
-  flex-direction: column;
-  margin-inline: auto;
-  justify-content: center;
-  width:700px;
-  gap: 5rem;
-}
-
-#help-alert-background  .alert .top{
-  width:70%;
-}
-
-#help-alert-background  .alert .bottom{
-  display:flex;
-  justify-content: end;
-  width:100%;
-}
-
-#help-alert-background  .alert span{
-  padding:1rem;
-  padding-inline: 1.3rem;
-
-  background: white;
-  color: black;
-
-
-  font-size: 2.5rem;
-  font-weight: bold;
-  width: fit-content;
-  display: flex;;
-  justify-self: end;
-  font-family: sans-serif;
-}
-
 h1{
   font-size: 3.5rem;
 }
