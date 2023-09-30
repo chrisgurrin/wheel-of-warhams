@@ -9,7 +9,6 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
   const btnSpin = document.getElementById("btn-spin");
   const btnClearProject = document.getElementById("btn-clear-project");
   const lblCurrentProject = document.getElementById("lbl-current-project");
-  const lblNoProject = document.getElementById("lbl-no-project");
   const txtBacklog = document.getElementById("txt-backlog");
 
   const canvas = document.getElementById("canvas");
@@ -116,7 +115,6 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
     // update current project
     localStorage.setItem('current_project', backlogItems[pickIndex])
     lblCurrentProject.innerHTML = backlogItems[pickIndex]
-    lblNoProject.classList.remove('visible');
 
     // remove item from backlog
     backlogItems.splice(pickIndex,1)
@@ -136,7 +134,6 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
 
   btnClearProject.onclick = () => {
     localStorage.setItem('current_project', 'Nothing!!!')
-    // lblNoProject.classList.add('visible');
     // lblCurrentProject.innerHTML = null
   }
 
@@ -151,12 +148,8 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
 
   // load current project
   const currentProject = localStorage.getItem('current_project')
-  if(currentProject){
-    lblCurrentProject.innerHTML = currentProject
-  }
-  else{
-    lblNoProject.classList.add('visible');
-  }
+
+  lblCurrentProject.innerHTML = currentProject ?? 'Nothing!!!'  
 
   redraw()
 
