@@ -77,12 +77,19 @@ img.ultra{
   height: 365px;
 }
 
-img.skullspider{
+img.bat1{
   position: fixed;
   right: 23rem;
   top: 180px;
   width:161px;
   height: 125px;
+}
+
+img.redstar{
+  position: fixed;
+  left: 29rem;
+  top: 90px;
+  scale: 1.4
 }
 
 img.toot {
@@ -91,7 +98,7 @@ img.toot {
 	top: 27rem;
 	width: 151px;
 	height: 115px;
-	scale: 1.8 1.93;
+	scale: 1.6 1.9;
 }
 
 canvas{
