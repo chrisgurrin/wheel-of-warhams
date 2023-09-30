@@ -1,5 +1,5 @@
 import { pickAlert, pickAlertMsg, helpAlert, hideAlert, setAlertMsg , showAlert } from './alert.js';
-import { formatBacklogString, loadBacklogFromStorage, setBacklogItems } from './backlog.js'
+import { formatBacklogString, loadBacklogFromStorage, loadCompletedBacklogFromStorage, setBacklogItems } from './backlog.js'
 import { getShuffledColors } from './colors.js';
 import { clear, drawArrow, drawSegment, drawSegmentText, drawPlaceholderText } from './drawing.js'
 import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
@@ -111,6 +111,11 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
   const onAlertClose = (pickIndex, backlogItems) => {
     hideAlert(pickAlert)
 
+    const completedProj = localStorage.getItem('current_project')
+    const completedBacklog = loadCompletedBacklogFromStorage()
+    localStorage.setItem('completed_backlog', [...completedBacklog, completedProj])
+
+
     // update current project
     localStorage.setItem('current_project', backlogItems[pickIndex])
     lblCurrentProject.innerHTML = backlogItems[pickIndex]
@@ -133,9 +138,9 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
   }
 
   btnClearProject.onclick = () => {
-    localStorage.removeItem("current_project");
-    lblNoProject.classList.add('visible');
-    lblCurrentProject.innerHTML = null
+    localStorage.setItem('current_project', 'Nothing!!!')
+    // lblNoProject.classList.add('visible');
+    // lblCurrentProject.innerHTML = null
   }
 
   txtBacklog.onchange = (e) => {
@@ -154,7 +159,6 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
   txtBacklog.value = formatBacklogString(backlogItems)
 
   // load current project
-  localStorage.getItem('current_project')
   const currentProject = localStorage.getItem('current_project')
   if(currentProject){
     lblCurrentProject.innerHTML = currentProject
