@@ -38,6 +38,7 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     ctx.save()
+    ctx.translate(48, 0);
   
     let segOffsetAngle = segAngle / 2;
 
@@ -134,7 +135,7 @@ import { deg2rad, rad2deg, easeInOutCirc, getScaledValue  } from './maths.js'
 
   btnClearProject.onclick = () => {
     localStorage.setItem('current_project', 'Nothing!!!')
-    // lblCurrentProject.innerHTML = null
+    lblCurrentProject.innerHTML = 'Nothing!!!'
   }
 
   txtBacklog.onchange = (e) => {

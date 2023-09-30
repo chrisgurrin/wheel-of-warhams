@@ -9,30 +9,33 @@
         <img class="skull3" src="./skull3.gif" />
         <img class="skullspider" src="./bat.gif" />
         <img class="ultra" src="./ultra.jpg" />
+        <img class="toot" src="./toot.gif" />
+        <button id="btn-clear-project">Clear project</button>
         <div id="current-project">
-            <div>Current project:</div>
+
+            <div id="lbl-current-proj-header">Current project:</div>
             <div id="lbl-current-project"></div>
-            <div id="lbl-no-project">Nothing!</div>
         </div>
         <div id="title">
             <span>Toby's Wheel Of Warhams</span>   
             </div>
         </div>
+        <div id="flame"></div>
      
         <main>  
             <section>
                 <div>
                     <canvas id="canvas"> </canvas>                  
-                    <div id="backlog">                    
-                        Shame wall
-                        <textarea id="txt-backlog"></textarea>
+                    <div id="backlog"> 
+                        <div class="torch"></div>
+                        <div class="torch"></div>
+                        <div>
+                            <span>Shame Wall</span>
+                            <button id="btn-spin">Spin</button>
+                        </div>
+                        <textarea id="txt-backlog"></textarea>                        
                     </div> 
-                </div> 
-                <div id="controls">
-                    <button id="btn-spin">Spin</button>
-                    <button id="btn-clear-project">Clear project</button>
-                    <div id="result" style="color:#fff"></div>
-                </div>     
+                </div>           
             </section>    
         </main>
         <div id="pick-alert-background" class="alert-background">
